@@ -5,6 +5,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "accounts")
 public class Account {
+    public Account(String companyName, String email, String password) {
+        this.companyName = companyName;
+        this.email = email;
+        this.password = password;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -18,6 +24,10 @@ public class Account {
 
     @Column(name = "password", length = 10)
     private String password;
+
+    public Account() {
+
+    }
 
     public Long getId() {
         return id;
