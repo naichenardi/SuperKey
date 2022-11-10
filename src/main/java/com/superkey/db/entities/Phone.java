@@ -1,9 +1,14 @@
 package com.superkey.db.entities;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "phones")
+@SQLDelete(sql = "UPDATE accounts SET deleted = true WHERE id = ?")
+@Where(clause = "deleted=false")
 public class Phone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +23,9 @@ public class Phone {
 
     @Column(name = "phone", length = 15)
     private String phone;
+
+    @Column(name = "deleted")
+    private boolean deleted = Boolean.FALSE;
 
     public Long getId() {
         return id;
@@ -51,4 +59,7 @@ public class Phone {
         this.phone = phone;
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
 }

@@ -3,7 +3,6 @@ package com.superkey;
 import com.superkey.db.entities.Account;
 import com.superkey.db.repositories.AccountRepository;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -20,15 +19,15 @@ class AccountEntityRepositoryTest {
     @Autowired
     private AccountRepository repository;
 
-    @BeforeAll
-    public static void init(){
+    private void insertAccounts() {
+        entityManager.persist(new Account("Emp1", "repre@Emp1.com", "123321"));
+        entityManager.persist(new Account("EMp2", "repre@EMp2.com", "123321"));
+        entityManager.persist(new Account("Emp3", "repre@Emp3.com", "123321"));
     }
 
     @Test
     public void shouldReturnSomeAccounts(){
-        entityManager.persist(new Account("Emp1", "repre@Emp1.com", "123321"));
-        entityManager.persist(new Account("EMp2", "repre@EMp2.com", "123321"));
-        entityManager.persist(new Account("Emp3", "repre@Emp3.com", "123321"));
+        insertAccounts();
 
         Iterable<Account> accounts = repository.findAll();
 
@@ -36,5 +35,18 @@ class AccountEntityRepositoryTest {
         accounts.iterator().forEachRemaining(list::add);
 
         Assertions.assertEquals(list.size(),3);
+    }
+
+    @Test
+    public void shouldDeleteFirstLine(){
+        insertAccounts();
+
+        Account account = repository.findAll().iterator().next();
+
+        Assertions.assertEquals(3,repository.count());
+
+        repository.delete(account);
+
+        Assertions.assertEquals(2,repository.count());
     }
 }
