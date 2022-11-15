@@ -5,16 +5,18 @@ import com.superkey.db.entities.Account;
 import com.superkey.db.repositories.AccountRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class AccountService {
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public AccountService(AccountRepository accountRepository) {
+
+    public AccountService(AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
         this.accountRepository = accountRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Page<AccountDTO> findAll(Pageable pageable) {
@@ -22,6 +24,14 @@ public class AccountService {
     }
 
     public void create(Account account) {
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
         accountRepository.save(account);
+    }
+
+    public boolean validatePassword(String email, String password) {
+        Account account = accountRepository.findByEmail(email).orElseThrow();
+        boolean valid = passwordEncoder.matches(password, account.getPassword());
+
+        return valid;
     }
 }

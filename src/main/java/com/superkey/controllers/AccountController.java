@@ -19,11 +19,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class AccountController {
 
     private final AccountService service;
-    private final PasswordEncoder passwordEncoder;
 
-    public AccountController(AccountService service, PasswordEncoder passwordEncoder) {
+    public AccountController(AccountService service) {
         this.service = service;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
@@ -35,8 +33,13 @@ public class AccountController {
     @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public void createAccount(@RequestBody AccountDTO account) {
-        account.setPassword(passwordEncoder.encode(account.getPassword()));
+
         service.create(account.toEntity());
+    }
+
+    @GetMapping(value = "/login", produces = APPLICATION_JSON_VALUE)
+    public boolean validateUserPassword(String username, String password) {
+        return service.validatePassword(username, password);
     }
 
 }
