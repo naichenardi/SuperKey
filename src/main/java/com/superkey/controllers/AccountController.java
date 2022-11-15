@@ -2,7 +2,6 @@ package com.superkey.controllers;
 
 import com.superkey.db.entities.Account;
 import com.superkey.services.AccountService;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/account")
-@Api("Accounts")
 public class AccountController {
     @Autowired
     private final AccountService service;
