@@ -1,5 +1,6 @@
 package com.superkey.db.entities;
 
+import com.superkey.controllers.dto.AccountDTO;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -71,5 +72,9 @@ public class Account {
 
     public boolean isDeleted() {
         return deleted;
+    }
+
+    public AccountDTO toDTO() {
+        return new AccountDTO(this.companyName, this.email, this.password);
     }
 }
