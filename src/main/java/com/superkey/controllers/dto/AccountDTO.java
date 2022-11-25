@@ -2,9 +2,18 @@ package com.superkey.controllers.dto;
 
 import com.superkey.db.entities.Account;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+
 public class AccountDTO {
+    @Null
     private String username;
+    @NotNull
+    @NotBlank
     private String password;
+    @NotNull
+    @NotBlank
     private String email;
 
     public AccountDTO(String companyName, String email, String password) {
