@@ -1,6 +1,6 @@
 package com.superkey.db.entities;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "profile_feature")

@@ -1,0 +1,1 @@
+ALTER TABLE accounts ADD COLUMN username VARCHAR(30) not null;

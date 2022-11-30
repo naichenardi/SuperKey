@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.superkey.db.repositories")
-public class ConfigJpa {
+public class JPAConfig {
 }
 
 
