@@ -33,13 +33,4 @@ public class AccountController {
     }
 
 
-/*    @PostMapping(value = "/login", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<TokenResponse> validateUserPassword(@Valid @RequestBody AccountDTO account) {
-        TokenResponse tokenResponse = service.validatePassword(account.getEmail(), account.getPassword());
-
-        HttpStatus status = null == tokenResponse ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
-
-        return ResponseEntity.status(status).body(tokenResponse);
-    }*/
-
 }
